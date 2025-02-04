@@ -1,39 +1,35 @@
 import 'package:flutter/material.dart';
 
-class AddTaskScreen extends StatefulWidget {
+class AddTaskScreen extends StatelessWidget {
   final Function(String) addTask;
 
   AddTaskScreen({required this.addTask});
 
   @override
-  _AddTaskScreenState createState() => _AddTaskScreenState();
-}
-
-class _AddTaskScreenState extends State<AddTaskScreen> {
-  final TextEditingController _controller = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
+    String newTaskTitle = "";
+
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
-            controller: _controller,
-            decoration: InputDecoration(labelText: 'Nueva tarea'),
+            onChanged: (value) {
+              newTaskTitle = value;
+            },
+            decoration: InputDecoration(labelText: "Nueva tarea"),
           ),
           SizedBox(height: 10),
           ElevatedButton(
             onPressed: () {
-              String newTaskTitle = _controller.text;
               if (newTaskTitle.isNotEmpty) {
-                widget.addTask(newTaskTitle);
-                Navigator.pop(context); // Cerrar modal
+                addTask(newTaskTitle);
+                Navigator.pop(context);
               }
             },
-            child: Text('Agregar tarea'),
-          ),
+            child: Text("Agregar"),
+          )
         ],
       ),
     );
